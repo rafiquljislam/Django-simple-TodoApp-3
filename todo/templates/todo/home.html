@@ -1,0 +1,37 @@
+{% extends 'todo/base.html' %}
+{% block content %}
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand">TO DO APP</a>
+        <form class="form-inline" action="{% url 'add' %}" method="post">{% csrf_token %}
+            <input name="text" class="form-control mr-sm-2" type="text" placeholder="Add List">
+            <button class="btn btn-success my-2 my-sm-0" type="submit">Add List</button>
+        </form>
+    </div>
+</nav>
+
+<div class="my-3">
+<table class="table table-dark table-bordered text-light">
+  {% for item in all_items %}
+  {% if item.complite %}
+  <tr>
+    <td>{{ item.id }}</td>
+    <td><del> {{ item.text }} </del></td>
+    <td class="text-center text-light"><a class="text-light"  href="uncomplite/{{item.id}}">Uncolplite</a></td>
+    <td class="text-center"><a class="text-light" href="update/{{ item.id }}">Update</a></td>
+    <td class="text-center"><a class="text-light"  href="delete/{{ item.id }}">Delete</a></td>
+  </tr>
+  {% else %}
+    <tr>
+      <td>{{ item.id }}</td>
+      <td>{{ item.text }}</td>
+      <td class="text-center text-light"><a class="text-light"  href="complite/{{item.id}}">Complite</a></td>
+      <td class="text-center"><a class="text-light" href="update/{{ item.id }}">Update</a></td>
+      <td class="text-center"><a class="text-light"  href="delete/{{ item.id }}">Delete</a></td>
+    </tr>
+    {% endif %}
+  {% endfor %}
+  </table>
+</div>
+
+{% endblock content %}
